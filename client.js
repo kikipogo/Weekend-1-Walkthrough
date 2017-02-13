@@ -11,11 +11,18 @@ $(document).ready(function(){ //waits for DOM to completely load
     $('#employeeTableBody').append(
       '<tr>' +
       '<td>' + firstName + '</td>' +
-      '<td>' + lastName '</td>' +
+      '<td>' + lastName + '</td>' +
       '<td>' + idNumber + '</td>' +
       '<td>' + jobTitle + '</td>' +
       '<td>' + annualSalary + '</td>' +
     '</tr>'
     );
+
+    //Add monthly salary expenses to the DOM
+    var newEmployeeMonthlyExpenses = annualSalary / 12;
+    var previousMonthlyExpenses = $('#monthlyExpenses').text();
+    var totalMonthlyExpenses = parseFloat(previousMonthlyExpenses) + newEmployeeMonthlyExpenses;
+    $('#monthlyExpenses').text(totalMonthlyExpenses);
+
   });
 });
