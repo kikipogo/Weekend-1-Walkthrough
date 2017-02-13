@@ -15,6 +15,7 @@ $(document).ready(function(){ //waits for DOM to completely load
       '<td>' + idNumber + '</td>' +
       '<td>' + jobTitle + '</td>' +
       '<td>' + annualSalary + '</td>' +
+      '<td><button class="deleteEmployeeButton">Delete</button></td>' +
     '</tr>'
     );
 
@@ -24,5 +25,11 @@ $(document).ready(function(){ //waits for DOM to completely load
     var totalMonthlyExpenses = parseFloat(previousMonthlyExpenses) + newEmployeeMonthlyExpenses;
     $('#monthlyExpenses').text(totalMonthlyExpenses);
 
+  });
+
+  $('#employeeTableBody').on('click', '.deleteEmployeeButton', function(){
+    console.log('Delete button was clicked!');
+    console.log($(this));
+    $(this).parent().parent().remove();
   });
 });
