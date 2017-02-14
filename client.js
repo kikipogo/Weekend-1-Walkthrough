@@ -1,22 +1,41 @@
 $(document).ready(function(){ //Waits for DOM to completely load
-  $('#submitNewEmployee').on('click', function(){ //Event listener on submitNewEmployee
-    //Declaring variables and retrieving values from input boxes
-    var firstName = $('#firstName').val();
-    var lastName = $('#lastName').val();
-    var idNumber = $('#idNumber').val();
-    var jobTitle = $('#jobTitle').val();
-    var annualSalary = $('#annualSalary').val();
+  $('form').on('submit', function(event){ //Event listener on form submit
+    event.preventDefault();//Do not bring us to new page
+
+    //Create an array of the inputs, inputs are converted to objects, objects have two proerties: name and values
+    //e.g. {name: 'firstName', value: 'Luke'}
+    console.log('form values ', $(this).serializeArray());//this refers to form
+
+    var submissionArray = $(this).serializeArray();// [{}, {}, {}]
+    var newEmployeeObject = {}; //{firstName: 'Luke', lastName: 'Schlangen'}
+
+    submissionArray.forEach(function(inputFieldObject){
+      //first time through newEmployeeObject is {}
+      newEmployeeObject[inputFieldObject.name] = inputFieldObject.value;
+      //newEmployeeObject.firstName = Luke;
+      //first time newEmployeeObject is {firstName: 'Luke'}
+      //second time newEmployeeObject is {firstName: 'Luke', lastName: 'Schlangen'}
+      // third time newEmployeeObject is {firstName: 'Luke', lastName: 'Schlangen' idNumber: 123}
+      //use [] instead of . to go through array
+    });
+    // FOR EACH ABOVE IS THE SAME AS FOR LOOP
+    // for (var i = 0; i < submissionArray.length; i++) {
+    //   var inputFieldObject = submissionArray[i];
+    //   newEmployeeObject[inputFieldObject.name] = inputFieldObject.value;
+    // }
+
+    console.log('New Employee Object:', newEmployeeObject);
 
     //Adds new employee row to the DOM
     $('#employeeTableBody').append(
       '<tr>' +
-      '<td>' + firstName + '</td>' +
-      '<td>' + lastName + '</td>' +
-      '<td>' + idNumber + '</td>' +
-      '<td>' + jobTitle + '</td>' +
-      '<td>' + annualSalary + '</td>' +
+      '<td>' + newEmployeeObject.firstName + '</td>' +
+      '<td>' + newEmployeeObject.lastName + '</td>' +
+      '<td>' + newEmployeeObject.idNumber + '</td>' +
+      '<td>' + newEmployeeObject.jobTitle + '</td>' +
+      '<td>' + newEmployeeObject.annualSalary + '</td>' +
       '<td><button class="deleteEmployeeButton" data-salary="' + annualSalary + '">Delete</button></td>' +
-    '</tr>'
+      '</tr>'
     );
 
     //Add monthly salary expenses to the DOM
